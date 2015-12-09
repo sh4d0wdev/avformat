@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Ffmpeg4r do
+describe AVFormat do
   it 'has a version number' do
-    expect(Ffmpeg4r::VERSION).not_to be nil
+    expect(AVFormat::VERSION).not_to be nil
   end
 
   it 'does something useful' do
