@@ -9,9 +9,6 @@ void  r_avformat_context_free(AVFormatContext *p) {
     //someone already used free
     if (!p) return;
 
-    // NULLed, so lets  check sizeof(NULL) == 8  but just in case
-    if (sizeof(p) == sizeof(NULL)) return;
-
     if (p->iformat != NULL)
         avformat_close_input(&p);
     avformat_free_context(p);
