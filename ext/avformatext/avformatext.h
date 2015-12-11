@@ -1,19 +1,16 @@
-#ifndef __RB_AVFORMT_EXT_H__
-#define __RB_AVFORMT_EXT_H__
+#ifndef _AVFORMAT_EXT_H__
+#define _AVFORMAT_EXT_H__
 
 #include <libavformat/avformat.h>
 
 #include "ruby.h"
-#include "avformat_context.h"
-#include "avformat_stream.h"
-
+#include "format.h"
+#include "input_format.h"
 
 // module AVFormat
-VALUE mAVFormat;
+VALUE rb_mAVFormat;
 
-VALUE r_av_register_all(void);
-VALUE r_avformat_open_input_file(VALUE self, VALUE filename);
-VALUE r_avformat_close_input_file(VALUE self, VALUE context);
+VALUE rb_av_register_all(void);
 
 
 #endif
