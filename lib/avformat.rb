@@ -1,6 +1,6 @@
 #coding: utf-8
-require "avformat/version"
-require 'avformat/avformatext'
+require 'avformat/version'
+require 'rubyavformat'
 
 module AVFormat
   # Your code goes here...

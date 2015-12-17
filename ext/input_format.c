@@ -1,4 +1,6 @@
-#include "input_format.h"
+#include "avformat.h"
+
+VALUE rb_cInputFormat;
 
 VALUE inputformat_initilize(VALUE self){
 
