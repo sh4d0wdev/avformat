@@ -10,9 +10,15 @@
 
 RUBY_EXTERN VALUE rb_cFormat;
 
-VALUE build_stream_obj(AVStream *stream);
+RUBY_EXTERN VALUE rb_cRational;
 
-void register_format(VALUE module);
-void register_inputformat(VALUE module);
-void register_stream(VALUE module);
+VALUE build_stream_obj(AVStream *stream);
+VALUE build_avcodec_obj(AVCodecContext *context);
+
+void init_format(VALUE module);
+void init_inputformat(VALUE module);
+void init_stream(VALUE module);
+void init_rational(VALUE module);
+void init_avdiscard(VALUE module);
+void init_avcodec(VALUE module);
 #endif

@@ -29,9 +29,16 @@ VALUE inputformat_close(VALUE self) {
 };
 
 
-void register_inputformat(VALUE module) {
+static VALUE inputformat_duration(VALUE self) {
+    AVFormatContext *ctx;
+    Data_Get_Struct(self, AVFormatContext, ctx);
+    return rb_float_new(ctx->duration * av_q2d(AV_TIME_BASE_Q));
+};
+
+void init_inputformat(VALUE module) {
     rb_cInputFormat = rb_define_class_under(module, "InputFormat", rb_cFormat);
     rb_define_method(rb_cInputFormat, "initialize", inputformat_initilize, 0);
     rb_define_method(rb_cInputFormat, "open", inputformat_open, 1);
     rb_define_method(rb_cInputFormat, "close", inputformat_close, 0);
+    rb_define_method(rb_cInputFormat, "duration", inputformat_duration, 0);
 };

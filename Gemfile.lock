@@ -29,10 +29,7 @@ PLATFORMS
 
 DEPENDENCIES
   avformat!
-  bundler (~> 1.10)
+  bundler (~> 1.7)
   rake (~> 10.0)
   rake-compiler
   rspec
-
-BUNDLED WITH
-   1.10.6

@@ -1,26 +1,22 @@
 #include "avformat.h"
 
 /***********
-   STATICS 
+STATICS 
 ************/
 
 /*******************
-   module AVFormat
+module AVFormat
 ********************/
 VALUE rb_mAVFormat;
 
-/**********************
-  func av_register_all
-************************/
-static VALUE rb_av_register_all( void ) {
-    av_register_all();
-    return Qnil;
-};
-
 void Init_rubyavformat(void) {
-    rb_mAVFormat = rb_define_module("AVFormat");
-    rb_define_module_function(rb_mAVFormat, "av_register_all", rb_av_register_all, 0);
-    register_format(rb_mAVFormat);
-    register_inputformat(rb_mAVFormat);
-    register_stream(rb_mAVFormat);
+	av_register_all();
+	avformat_network_init();
+	rb_mAVFormat = rb_define_module("AVFormat");
+	init_rational(rb_mAVFormat);
+	init_format(rb_mAVFormat);
+	init_inputformat(rb_mAVFormat);
+	init_stream(rb_mAVFormat);
+	init_avdiscard(rb_mAVFormat);
+	init_avcodec(rb_mAVFormat);
 };
