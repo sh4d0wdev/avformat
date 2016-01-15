@@ -12,7 +12,8 @@ Under heavy development
 
 
 * Configure and build
-
+```
     ./configure --prefix=/opt/ffmpeg --enable-pthreads --enable-shared --enable-gpl
     make
     sudo make install
+```
