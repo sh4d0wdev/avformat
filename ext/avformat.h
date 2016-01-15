@@ -21,4 +21,5 @@ void init_stream(VALUE module);
 void init_rational(VALUE module);
 void init_avdiscard(VALUE module);
 void init_avcodec(VALUE module);
+void init_avmediatype(VALUE module);
 #endif

@@ -32,7 +32,7 @@ VALUE inputformat_close(VALUE self) {
 static VALUE inputformat_duration(VALUE self) {
     AVFormatContext *ctx;
     Data_Get_Struct(self, AVFormatContext, ctx);
-    return rb_float_new(ctx->duration * av_q2d(AV_TIME_BASE_Q));
+    return INT2NUM(ctx->duration);
 };
 
 void init_inputformat(VALUE module) {

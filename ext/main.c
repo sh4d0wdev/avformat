@@ -19,4 +19,5 @@ void Init_rubyavformat(void) {
 	init_stream(rb_mAVFormat);
 	init_avdiscard(rb_mAVFormat);
 	init_avcodec(rb_mAVFormat);
+	init_avmediatype(rb_mAVFormat);
 };

@@ -3,20 +3,33 @@ VALUE rb_cAVCodec;
 
 static VALUE avcodec_name(VALUE self){
 	AVCodecContext *context;
-	Data_Get_Struct(self, AVCodecContext, context);
-	if (context->codec == NULL){
-		rb_raise(rb_eRuntimeError, "Codec is null");
+	const char *name;
+  const AVCodecDescriptor *cd;
+  Data_Get_Struct(self, AVCodecContext, context);
+	if (context->codec){
+		name = context->codec->name;
 	}
-	return rb_str_new2(context->codec->name);
+  else if ((cd = avcodec_descriptor_get(context->codec_id))){
+    name = cd->name;
+  } else {
+    name = "unknown";
+  }
+	return rb_str_new2(name);
 };
 
 static VALUE avcodec_long_name(VALUE self){
 	AVCodecContext *context;
+  const char *long_name;
+  const AVCodecDescriptor *cd;
 	Data_Get_Struct(self, AVCodecContext, context);
-	if (context->codec == NULL){
-		rb_raise(rb_eRuntimeError, "Codec is null");
-	}
-	return rb_str_new2("");
+  if (context->codec){
+	  long_name = context->codec->long_name;
+  } else if ((cd = avcodec_descriptor_get(context->codec_id))){
+    long_name = cd->long_name;
+  } else {
+    long_name = "unknown";
+  }
+	return rb_str_new2(long_name);
 };
 
 static VALUE avcodec_bit_rate(VALUE self){
@@ -246,6 +259,12 @@ static VALUE avcodec_pre_dia_size(VALUE self){
 	return INT2NUM(context->pre_dia_size);
 };
 
+static VALUE avcodec_codec_type(VALUE self){
+	AVCodecContext *context;
+	Data_Get_Struct(self, AVCodecContext, context);
+	return INT2NUM(context->codec_type);
+};
+
 static VALUE avcodec_me_range(VALUE self){
 	AVCodecContext *context;
 	Data_Get_Struct(self, AVCodecContext, context);
@@ -284,6 +303,16 @@ void init_avdiscard(VALUE module){
 	rb_define_const(module, "AVDISCARD_NONKEY", INT2NUM(32));
 	rb_define_const(module, "AVDISCARD_ALL", INT2NUM(48));
 };
+
+void init_avmediatype(VALUE module){
+  rb_define_const(module, "AVMEDIA_TYPE_UNKNOWN", INT2NUM(-1));
+  rb_define_const(module, "AVMEDIA_TYPE_VIDEO", INT2NUM(0));
+  rb_define_const(module, "AVMEDIA_TYPE_AUDIO", INT2NUM(1));
+  rb_define_const(module, "AVMEDIA_TYPE_DATA", INT2NUM(2));
+  rb_define_const(module, "AVMEDIA_TYPE_SUBTITLE", INT2NUM(3));
+  rb_define_const(module, "AVMEDIA_TYPE_ATTACHMENT", INT2NUM(4));
+  rb_define_const(module, "AVMEDIA_TYPE_NB", INT2NUM(5));
+}
 
 void init_avcodec(VALUE  module) {
 	rb_cAVCodec = rb_define_class_under(module, "AVCodec", rb_cObject);
@@ -330,4 +359,5 @@ void init_avcodec(VALUE  module) {
 	rb_define_method(rb_cAVCodec, "mb_decision", avcodec_mb_decision, 0);
 	rb_define_method(rb_cAVCodec, "scenechange_threshold", avcodec_scenechange_threshold, 0);
 	rb_define_method(rb_cAVCodec, "noise_reduction", avcodec_noise_reduction, 0);
+	rb_define_method(rb_cAVCodec, "codec_type", avcodec_codec_type, 0);
 };
