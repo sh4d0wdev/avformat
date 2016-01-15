@@ -28,6 +28,12 @@ static VALUE avrational_to_s(VALUE self){
 	return rb_str_plus(t, den);
 };
 
+static VALUE avrational_to_f(VALUE self){
+	AVRational *rational;
+	Data_Get_Struct(self, AVRational, rational);
+  return rb_float_new(av_q2d(*rational));
+};
+
 static VALUE avrational_initialize(VALUE self, VALUE num, VALUE den){
 	AVRational *rational;
 	Data_Get_Struct(self, AVRational, rational);
@@ -43,5 +49,6 @@ void init_rational(VALUE module) {
 	rb_define_method(rb_cRational, "num", avrational_num, 0);
 	rb_define_method(rb_cRational, "den", avrational_den, 0);
 	rb_define_method(rb_cRational, "to_s", avrational_to_s, 0);
-
+  rb_define_method(rb_cRational, "to_f", avrational_to_f, 0);
+  rb_define_const(module, "AV_TIME_BASE", INT2NUM(AV_TIME_BASE));
 }
